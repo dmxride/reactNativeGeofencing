@@ -1,9 +1,7 @@
-package com.geoparque_vc;
+package com.reactnativeubinativegeofencing;
 
-import io.sentry.Sentry;
-
-import static com.geoparque_vc.nativeModules.GeofencingModule.readEntries;
-import static com.geoparque_vc.nativeModules.GeofencingModule.readEntriesArray;
+import static com.reactnativeubinativegeofencing.UbiNativeGeofencingModule.readEntries;
+import static com.reactnativeubinativegeofencing.UbiNativeGeofencingModule.readEntriesArray;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -14,9 +12,11 @@ import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
-import com.geoparque_vc.nativeModules.GeofencingModule;
-import com.geoparque_vc.nativeModules.ReactNativeJson;
-import com.geoparque_vc.nativeModules.SingleShotLocationProvider;
+import com.reactnativeubinativegeofencing.UbiNativeGeofencingModule;
+import com.reactnativeubinativegeofencing.ReactNativeJson;
+import com.reactnativeubinativegeofencing.Notifications;
+
+import com.reactnativeubinativegeofencing.SingleShotLocationProvider;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingEvent;
@@ -39,13 +39,9 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
     try {
       Log.d("GEOFENCE", "Receiving");
 
-      Sentry.capture("GEOFENCE EVENT DETECTED");
-
-      Sentry.capture("CURRENT GEOFENCES:");
       JSONArray geofenceEntries = readEntriesArray(context, "geofenceEntries");
-      Sentry.capture(geofenceEntries.toString());
+      GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
 
-        GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
       if (geofencingEvent.hasError()) {
         String errorMessage = GeofenceStatusCodes
             .getStatusCodeString(geofencingEvent.getErrorCode());
@@ -92,7 +88,6 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
           Integer poiID = null;
 
           if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT) {
-            Sentry.capture("EXITING GEOFENCE");
             Log.d("GEODETAILS EXIT", geofenceTransitionDetails.toString());
 
             Promise promise = new Promise() {
@@ -152,21 +147,11 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
               }
             };
 
-            Sentry.capture("EXITING GEOFENCE");
-
-            if (entry.has("poiId")) {
-              Sentry.capture("GEOFENCE POIID: " + entry.getString("poiId"));
-            }
-
-            if (entry.has("enterTitle")) {
-              Sentry.capture("GEOFENCE ENTER TITLE: " + entry.getString("enterTitle"));
-            }
-
             SingleShotLocationProvider.requestSingleUpdate(context,
                 new SingleShotLocationProvider.LocationCallback() {
                   @Override
                   public void onNewLocationAvailable(Location location) throws JSONException {
-                    GeofencingModule.configPoiFromMe(promise, context, location);
+                    UbiNativeGeofencingModule.configPoiFromMe(promise, context, location);
                   }
                 });
 
@@ -188,12 +173,10 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
 
           Log.d("DEBUG ENTRY", entry.toString());
           if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER) {
-            Sentry.capture("ENTERING GEOFENCE");
 
             if (entry.has("enterTitle") || entry.has("enterMessage")) {
               sendNotification = true;
               if (entry.has("enterTitle")) {
-                Sentry.capture("GEOFENCE ENTER TITLE: " + entry.getString("enterTitle"));
                 notTitle = entry.getString("enterTitle");
               }
               if (entry.has("enterMessage")) {
@@ -212,12 +195,10 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
           }
 
           if (entry.has("poiId")) {
-            Sentry.capture("GEOFENCE POIID: " + entry.getString("poiId"));
             poiID = Double.valueOf(entry.getString("poiId")).intValue();
           }
 
           if (entry.has("deepLink")) {
-            Sentry.capture("GEOFENCE DEEPLINK: " + entry.getString("deepLink"));
             deepLink = entry.getString("deepLink");
           }
 

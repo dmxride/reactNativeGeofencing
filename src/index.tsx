@@ -1,4 +1,5 @@
 import { NativeModules, Platform } from 'react-native';
+import type { IStartMonitoring, IPoi } from './types';
 
 const LINKING_ERROR =
   `The package 'react-native-ubi-native-geofencing' doesn't seem to be linked. Make sure: \n\n` +
@@ -17,6 +18,16 @@ const UbiNativeGeofencing = NativeModules.UbiNativeGeofencing
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return UbiNativeGeofencing.multiply(a, b);
+export function startMonitoring(
+  dataStructure: IStartMonitoring
+): Promise<boolean> {
+  return UbiNativeGeofencing.startMonitoring(dataStructure);
+}
+
+export function stopMonitoring(): Promise<boolean> {
+  return UbiNativeGeofencing.stopMonitoring();
+}
+
+export function addPois(poistList: IPoi[]): Promise<boolean> {
+  return UbiNativeGeofencing.addPois(poistList);
 }

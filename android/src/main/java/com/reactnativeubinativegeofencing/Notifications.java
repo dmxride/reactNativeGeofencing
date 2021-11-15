@@ -1,4 +1,4 @@
-package com.geoparque_vc;
+package com.reactnativeubinativegeofencing;
 
 import android.app.ActivityManager;
 import android.app.NotificationManager;

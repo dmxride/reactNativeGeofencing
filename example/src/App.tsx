@@ -1,18 +1,51 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-ubi-native-geofencing';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import {
+  startMonitoring,
+  stopMonitoring,
+} from 'react-native-ubi-native-geofencing';
+
+import { monitoringMockStructure } from './mock';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [isMonitoring, setIsMonitoring] = React.useState(false);
 
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
+  const startTracking = () => {
+    startMonitoring(monitoringMockStructure)
+      .then(() => {
+        console.log('GEOFENCING STARTED MONITORING');
+        setIsMonitoring(true);
+      })
+      .catch((e) => {
+        console.log('AN ERROR HAS OCURRED WITH GEOFENCING MONITORING');
+        console.error(e);
+      });
+  };
+
+  const stopTracking = () => {
+    stopMonitoring()
+      .then(() => {
+        console.log('GEOFENCING STOPPED MONITORING');
+        setIsMonitoring(false);
+      })
+      .catch((e) => {
+        console.log('AN ERROR HAS OCURRED WITH GEOFENCING MONITORING');
+        console.error(e);
+      });
+  };
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      {!isMonitoring ? (
+        <TouchableOpacity style={styles.button} onPress={startTracking}>
+          <Text>Start Monitoring</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.button} onPress={stopTracking}>
+          <Text>Stop Monitoring</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -22,10 +55,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#000003',
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
+  button: {
+    height: 30,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFF66',
   },
 });
