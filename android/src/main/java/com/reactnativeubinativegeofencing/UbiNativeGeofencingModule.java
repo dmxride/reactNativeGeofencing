@@ -61,22 +61,24 @@ import okhttp3.ResponseBody;
 
 @ReactModule(name = UbiNativeGeofencingModule.NAME)
 public class UbiNativeGeofencingModule extends ReactContextBaseJavaModule {
-    public static final String NAME = "UbiNativeGeofencing";
-    private static ReactApplicationContext reactContext;
-    private static GeofencingClient geofencingClient;
-    private static GeofencingRequest.Builder geoBuilder;
-    private static PendingIntent geofencePendingIntent;
-    public static String GeofencingPrefs = "geofencing_preferences";
+  public static final String NAME = "UbiNativeGeofencing";
+  private static ReactApplicationContext reactContext;
+  private static GeofencingClient geofencingClient;
+  private static GeofencingRequest.Builder geoBuilder;
+  private static PendingIntent geofencePendingIntent;
+  public static String GeofencingPrefs = "geofencing_preferences";
 
-    public UbiNativeGeofencingModule(ReactApplicationContext reactContext) {
-        super(reactContext);
-    }
+  public UbiNativeGeofencingModule(ReactApplicationContext context) {
+    super(context);
+    reactContext = context;
+  }
 
-    @Override
-    @NonNull
-    public String getName() {
-        return NAME;
-    }
+  @Override
+  @NonNull
+  public String getName() {
+    return NAME;
+  }
+
   @ReactMethod
   public void startMonitoring(ReadableMap channelOptionsMap, Promise promise) {
 
@@ -114,12 +116,10 @@ public class UbiNativeGeofencingModule extends ReactContextBaseJavaModule {
       saveEntries(map, "channelOptions", reactContext.getApplicationContext());
 
       createNotificationChannel(
-          channelOptions.getString("channelId"),
-          channelOptions.getString("channelName"),
-          channelOptions.getString("channelDescription")
+        channelOptions.getString("channelId"),
+        channelOptions.getString("channelName"),
+        channelOptions.getString("channelDescription")
       );
-
-
 
       if (channelOptions.has("startNotification")) {
         String notLink = null;
@@ -138,12 +138,13 @@ public class UbiNativeGeofencingModule extends ReactContextBaseJavaModule {
       if (map.has("watchSelfLocation")) {
         if (map.getBoolean("watchSelfLocation")) {
           SingleShotLocationProvider.requestSingleUpdate(reactContext.getApplicationContext(),
-              new SingleShotLocationProvider.LocationCallback() {
-                @Override
-                public void onNewLocationAvailable(Location location) throws JSONException {
-                  configPoiFromMe(promise, reactContext.getApplicationContext(), location);
-                }
-              });
+            new SingleShotLocationProvider.LocationCallback() {
+              @Override
+              public void onNewLocationAvailable(Location location) throws JSONException {
+                Log.d("DEBUG", location.toString());
+                configPoiFromMe(promise, reactContext.getApplicationContext(), location);
+              }
+            });
 
         }
       } else {
@@ -155,7 +156,6 @@ public class UbiNativeGeofencingModule extends ReactContextBaseJavaModule {
     }
   }
 
-
   @ReactMethod
   public void stopMonitoring(Promise promise) {
     if (geofencingClient == null) {
@@ -163,23 +163,23 @@ public class UbiNativeGeofencingModule extends ReactContextBaseJavaModule {
     }
     try {
       geofencingClient.removeGeofences(getGeofencePendingIntent(reactContext.getApplicationContext()))
-          .addOnSuccessListener(
-              new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                  Log.d("GEOFENCE_MODULE", "Geofences stopped");
-                  promise.resolve("Stopped Geofencing Receiver");
-                }
-              })
-          .addOnFailureListener(
-              new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                  e.printStackTrace();
-                  promise.reject(e.getMessage());
-                }
-              }
-          );
+        .addOnSuccessListener(
+          new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+              Log.d("GEOFENCE_MODULE", "Geofences stopped");
+              promise.resolve("Stopped Geofencing Receiver");
+            }
+          })
+        .addOnFailureListener(
+          new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+              e.printStackTrace();
+              promise.reject(e.getMessage());
+            }
+          }
+        );
     } catch (Exception e) {
       promise.reject(e.getMessage());
       e.printStackTrace();
@@ -199,12 +199,12 @@ public class UbiNativeGeofencingModule extends ReactContextBaseJavaModule {
     }
     try {
       geofencingClient.removeGeofences(getGeofencePendingIntent(reactContext.getApplicationContext()))
-          .addOnSuccessListener(reactContext.getCurrentActivity(), aVoid -> {
-            Log.d("GEOFENCE_MODULE", "Geofences removed");
-          })
-          .addOnFailureListener(reactContext.getCurrentActivity(), e -> {
-            e.printStackTrace();
-          });
+        .addOnSuccessListener(reactContext.getCurrentActivity(), aVoid -> {
+          Log.d("GEOFENCE_MODULE", "Geofences removed");
+        })
+        .addOnFailureListener(reactContext.getCurrentActivity(), e -> {
+          e.printStackTrace();
+        });
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -222,79 +222,79 @@ public class UbiNativeGeofencingModule extends ReactContextBaseJavaModule {
       saveEntriesArray(entriesArray, "geofenceEntries", context);
 
       geofencingClient.removeGeofences(getGeofencePendingIntent(context))
-          .addOnSuccessListener(
-              new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
+        .addOnSuccessListener(
+          new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
 
-                  Log.d("GEOFENCE_MODULE", "Geofences removed");
-                  Log.d("GEOFENCE_ENTRIES", entriesArray.toString());
+              Log.d("GEOFENCE_MODULE", "Geofences removed");
+              Log.d("GEOFENCE_ENTRIES", entriesArray.toString());
 
-                  geofencingClient.addGeofences(getGeofencingRequest(entries.toArrayList()), getGeofencePendingIntent(context))
-                      .addOnSuccessListener(
-                          new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                              promise.resolve("Geofences added");
-                            }
-                          })
-                      .addOnFailureListener(
-                          new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                              e.printStackTrace();
-                              promise.reject("Failed to add geofences");
-                            }
-                          }
-                      );
-                }
-              })
-          .addOnFailureListener(
-              new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                  Log.d("GEOFENCE_ENTRIES", entriesArray.toString());
+              geofencingClient.addGeofences(getGeofencingRequest(entries.toArrayList()), getGeofencePendingIntent(context))
+                .addOnSuccessListener(
+                  new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                      promise.resolve("Geofences added");
+                    }
+                  })
+                .addOnFailureListener(
+                  new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                      e.printStackTrace();
+                      promise.reject("Failed to add geofences");
+                    }
+                  }
+                );
+            }
+          })
+        .addOnFailureListener(
+          new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+              Log.d("GEOFENCE_ENTRIES", entriesArray.toString());
 
-                  geofencingClient.addGeofences(getGeofencingRequest(entries.toArrayList()), getGeofencePendingIntent(context))
-                      .addOnSuccessListener(
-                          new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                              promise.resolve("Geofences added");
-                            }
-                          })
-                      .addOnFailureListener(
-                          new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                              e.printStackTrace();
-                              promise.reject("Failed to add geofences");
-                            }
-                          }
-                      );
-                }
-              }
-          );
+              geofencingClient.addGeofences(getGeofencingRequest(entries.toArrayList()), getGeofencePendingIntent(context))
+                .addOnSuccessListener(
+                  new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                      promise.resolve("Geofences added");
+                    }
+                  })
+                .addOnFailureListener(
+                  new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                      e.printStackTrace();
+                      promise.reject("Failed to add geofences");
+                    }
+                  }
+                );
+            }
+          }
+        );
 
 
     } catch (Exception e) {
       geofencingClient.addGeofences(getGeofencingRequest(entries.toArrayList()), getGeofencePendingIntent(context))
-          .addOnSuccessListener(
-              new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                  promise.resolve("Geofences added");
-                }
-              })
-          .addOnFailureListener(
-              new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                  e.printStackTrace();
-                  promise.reject("Failed to add geofences");
-                }
-              }
-          );
+        .addOnSuccessListener(
+          new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+              promise.resolve("Geofences added");
+            }
+          })
+        .addOnFailureListener(
+          new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+              e.printStackTrace();
+              promise.reject("Failed to add geofences");
+            }
+          }
+        );
 
       e.printStackTrace();
     }
@@ -308,19 +308,19 @@ public class UbiNativeGeofencingModule extends ReactContextBaseJavaModule {
       Properties entry = gson.fromJson(new Gson().toJson(entries.get(i)), Properties.class);
 
       geofenceList.add(new Geofence.Builder()
-          // Set the request ID of the geofence. This is a string to identify this
-          // geofence.
-          .setRequestId(entry.getProperty("key"))
-          .setExpirationDuration(Geofence.NEVER_EXPIRE)
-          .setCircularRegion(
-              Double.parseDouble(entry.getProperty("latitude")),
-              Double.parseDouble(entry.getProperty("longitude")),
-              Float.parseFloat(entry.getProperty("radius"))
-          )
-          .setNotificationResponsiveness(0)
-          .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-              Geofence.GEOFENCE_TRANSITION_EXIT)
-          .build());
+        // Set the request ID of the geofence. This is a string to identify this
+        // geofence.
+        .setRequestId(entry.getProperty("key"))
+        .setExpirationDuration(Geofence.NEVER_EXPIRE)
+        .setCircularRegion(
+          Double.parseDouble(entry.getProperty("latitude")),
+          Double.parseDouble(entry.getProperty("longitude")),
+          Float.parseFloat(entry.getProperty("radius"))
+        )
+        .setNotificationResponsiveness(0)
+        .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+          Geofence.GEOFENCE_TRANSITION_EXIT)
+        .build());
     }
 
     geoBuilder = new GeofencingRequest.Builder();
@@ -356,8 +356,8 @@ public class UbiNativeGeofencingModule extends ReactContextBaseJavaModule {
 
       OkHttpClient client = new OkHttpClient();
       Request request = new Request.Builder()
-          .url(poiURL)
-          .build();
+        .url(poiURL)
+        .build();
 
       client.newCall(request).enqueue(new Callback() {
         @Override
@@ -742,7 +742,7 @@ public class UbiNativeGeofencingModule extends ReactContextBaseJavaModule {
     // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when
     // calling addGeofences() and removeGeofences().
     geofencePendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.
-        FLAG_UPDATE_CURRENT);
+      FLAG_UPDATE_CURRENT);
     return geofencePendingIntent;
   }
 

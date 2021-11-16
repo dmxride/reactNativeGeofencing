@@ -10,6 +10,9 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
+
+      <receiver android:name="com.reactnativeubinativegeofencing.GeofenceBroadcastReceiver" />
+
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"
