@@ -302,27 +302,27 @@ startMonitoring(startStructure)
 <a name="useStringProps"></a>
 | useString Props | Description | Type |
 | ------------------- | ----------- | ---- |
-| type | | `'string'` |
+| type | "" | `'string'` |
 | data | "" | `String[]`|
 | filter | "" | `?String[]`|
 
 <a name="useReplaceProps"></a>
 | useReplace Props | Description | Type |
 | ------------------- | ----------- | ---- |
-| type | | `'replace'` |
+| type | "" | `'replace'` |
 | data | "" | `String`|
 | fireplacelter | "" | `{ [key: string]: String[]; }`|
 
 <a name="useNumberProps"></a>
 | useNumber Props | Description | Type |
 | ------------------- | ----------- | ---- |
-| type | | `'number'` |
+| type | "" | `'number'` |
 | data | "" | `Number`|
 
 <a name="usePathProps"></a>
 | usePath Props | Description | Type |
 | ------------------- | ----------- | ---- |
-| type | | `'path'` |
+| type | "" | `'path'` |
 | data | "" | `String[]`|
 
 ## `stopMonitoring`
