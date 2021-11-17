@@ -189,7 +189,6 @@ const startStructure = {
   poiURL:
     'https://geoparquelitoralviana.pt/api/v2/pois/?title_search=&only_points=true&categories=8,4,6,7&radius=:radius&lat=:latitude&long=:longitude',
   fetchRadius: 0.4,
-  filter: [['poi', 'poiId', '=']],
   dataStructure: [
     {
       main: ['items'],
