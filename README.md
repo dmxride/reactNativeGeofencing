@@ -106,6 +106,48 @@ import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 }
 ```
 
+## Integration
+
+### Android
+
+---
+
+1. Simply add this to your `AndroidManifest.xml` inside the `<application>` tag:
+
+```java
+<receiver android:name="com.reactnativeubinativegeofencing.GeofenceBroadcastReceiver" />
+```
+
+### iOS
+
+---
+
+1. Inside your `AppDelegate.m` import the header file
+
+```objective-c
+ #import <react-native-ubi-native-geofencing/GeofencingModuleDelegate.h>
+```
+
+2. Inside your delegate `- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions` insert this before the `return` statement:
+
+```objective-c
+ - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  ...
+
+  [GeofencingModuleDelegate start];
+
+  return YES;
+}
+```
+
+3. Update your Info.plist bu adding `NSLocationAlwaysAndWhenInUseUsageDescription` and `NSLocationWhenInUseUsageDescription` keys.
+
+4. Add or update the background modes capabilities with the following settings:
+
+![BgModes1](./readme/bgModes1.png)
+![BgModes2](./readme/bgModes2.png)
+
 # Usage
 
 ```typescript
