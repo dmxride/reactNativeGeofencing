@@ -270,7 +270,7 @@ startMonitoring(startStructure)
 | watchSelfLocation                            | ""          | `Boolean`                           |
 | poiURL                                       | ""          | `String`                            |
 | fetchRadius                                  | ""          | `Number`                            |
-| (dataStructure)(#dataStructureProps)         | ""          | [`Object[]`](#dataStructureProps)   |
+| [dataStructure](#dataStructureProps)         | ""          | [`Object[]`](#dataStructureProps)   |
 
 <a name="startNotificationProps"></a>
 | startNotification Props | Description | Type |
