@@ -4,4 +4,6 @@
 
 @interface UbiNativeGeofencing : NSObject <CLLocationManagerDelegate, UIApplicationDelegate, RCTBridgeModule>
 
+-(void)configPoiFromMe;
+
 @end

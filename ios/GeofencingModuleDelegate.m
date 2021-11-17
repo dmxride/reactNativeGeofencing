@@ -8,49 +8,57 @@
 
 #import <Foundation/Foundation.h>
 #import "GeofencingModuleDelegate.h"
-#import "GeofencingModule.h"
+#import "UbiNativeGeofencing.h"
 
 #import <CoreLocation/CoreLocation.h>
 #import <UserNotifications/UserNotifications.h>
+#import <CoreLocation/CLLocationManagerDelegate.h>
 
 @implementation GeofencingModuleDelegate
+
++ (GeofencingModuleDelegate *)sharedManager {
+    static GeofencingModuleDelegate *sharedMyManager = nil;
+    static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            sharedMyManager = [[self alloc]init];
+        });
+        return sharedMyManager;
+}
+
++(void)start {
+    static GeofencingModuleDelegate *sharedMyManager = nil;
+    static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            sharedMyManager = [[self alloc]init];
+        });
+}
+
+- (id)init {
+    self = [super init];
+    if (self != nil) {
+          //we now create a new self.locationManager service
+          self.locationManager = [CLLocationManager new];
+          self.locationManager.distanceFilter = 5;
+          self.locationManager.allowsBackgroundLocationUpdates = true;
+          self.locationManager.pausesLocationUpdatesAutomatically = true;
+          self.locationManager.activityType = CLActivityTypeFitness;
+          self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+          self.locationManager.delegate = self;
+        
+        self.notificationCenter = [UNUserNotificationCenter currentNotificationCenter];
+        self.notificationCenter.delegate = self;
+    
+      }
+    return self;
+}
 
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler{
 NSLog(@"User Info : %@",notification.request.content.userInfo);
 completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
 }
 
-- (void)locationManager:(CLLocationManager *)_manager monitoringDidFailFor:(CLRegion *)region withError:(NSError *)error{
-  printf("Monitoring failed for region with identifier: \(region!.identifier)");
-}
-
-- (void)locationManager:(CLLocationManager *)_manager didFailWithError:(CLRegion *)region withError:(NSError *)error{
-  printf("Location Manager failed with the following error: \(error)");
-}
-
 - (void)locationManager:(CLLocationManager *)_manager didExitRegion:(CLRegion *)region{
   NSLog(@"Region = %@", @"Did exit Region");
-}
-
-
-// Add the openURL and continueUserActivity functions
--(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-
-  NSLog(@"Notification Info : %@", url);
-
-    if (![RNBranch.branch application:app openURL:url options:options]) {
-        // do other deep link routing for the Facebook SDK, Pinterest SDK, etc
-
-    }
-    return YES;
-}
-
--(BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
-    return [RNBranch continueUserActivity:userActivity];
-}
-
--(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler{
-  completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
 }
 
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
@@ -80,8 +88,8 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
 }
 
 - (void)locationManager:(CLLocationManager *)manager didStartMonitoringForRegion:(CLRegion *)region {
-
-    [[Utils sharedManager].locationManager performSelector:@selector(requestStateForRegion:) withObject:region afterDelay:5];
+            NSLog(@"GEOFENCE: %@", @"START MONITORING");
+    [[GeofencingModuleDelegate sharedManager].self.locationManager performSelector:@selector(requestStateForRegion:) withObject:region afterDelay:5];
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -106,7 +114,7 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
   NSLog(@"Region Did exit Region= %@", [region valueForKeyPath:@"identifier"]);
 //  NSLog(@"Region details= %@", region);
 
-  NSMutableArray *collection =  [Utils readFromFile:@"geofenceEntries"];
+  NSMutableArray *collection =  [GeofencingModuleDelegate readFromFile:@"geofenceEntries"];
   NSString *name= nil;
   NSString *desc= nil;
   NSString *poiId= nil;
@@ -141,7 +149,6 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
 
       NSLog(@"DEBUG CLASS IMAGE URL= %@", imageURL);
 
-      UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
       UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
 
       UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1
@@ -161,7 +168,7 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
       }
 
       if(imageURL){
-        [Utils loadAttachmentForUrlString:imageURL completionHandler:^(UNNotificationAttachment *attachment) {
+        [GeofencingModuleDelegate loadAttachmentForUrlString:imageURL completionHandler:^(UNNotificationAttachment *attachment) {
 
           if (attachment) {
             content.attachments = [NSArray arrayWithObject:attachment];
@@ -171,7 +178,7 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
                                                                                 content:content trigger:trigger];
 
 
-          [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+          [self.notificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
             if (error != nil) {
               NSLog(@"Something went wrong: %@",error);
             }
@@ -180,7 +187,7 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
       }else{
         UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
                                                                               content:content trigger:trigger];
-        [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        [self.notificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
           if (error != nil) {
             NSLog(@"Something went wrong: %@",error);
           }
@@ -191,7 +198,7 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
 
   if([[region valueForKeyPath:@"identifier"] isEqualToString:@"myCurrenLocation"]){
     NSLog(@"Region = %@", @"Did exit myCurrenLocation");
-    GeofencingModule *theObject=[[GeofencingModule alloc]init];
+      UbiNativeGeofencing *theObject=[[UbiNativeGeofencing alloc]init];
     [theObject configPoiFromMe];
   }
 }
@@ -199,7 +206,7 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
 - (void)enterGeofence:(CLRegion *)region {
   NSLog(@"Region = %@", @"Did enter Region");
 
-  NSMutableArray *collection =  [Utils readFromFile:@"geofenceEntries"];
+  NSMutableArray *collection =  [GeofencingModuleDelegate readFromFile:@"geofenceEntries"];
   NSString *name= nil;
   NSString *desc= nil;
   NSString *poiId= nil;
@@ -242,7 +249,6 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
 
       NSLog(@"DEBUG CLASS IMAGE URL= %@", imageURL);
 
-      UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
       UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
       UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1
                                                                                                       repeats:NO];
@@ -260,7 +266,7 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
       }
 
       if(imageURL != nil){
-        [Utils loadAttachmentForUrlString:imageURL completionHandler:^(UNNotificationAttachment *attachment) {
+        [GeofencingModuleDelegate loadAttachmentForUrlString:imageURL completionHandler:^(UNNotificationAttachment *attachment) {
 
           if (attachment) {
             content.attachments = [NSArray arrayWithObject:attachment];
@@ -268,7 +274,7 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
 
           UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
                                                                                 content:content trigger:trigger];
-          [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+          [self.notificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
             if (error != nil) {
               NSLog(@"Something went wrong: %@",error);
             }
@@ -277,7 +283,7 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
       }else{
         UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
                                                                               content:content trigger:trigger];
-        [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
+        [self.notificationCenter addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
           if (error != nil) {
             NSLog(@"Something went wrong: %@",error);
           }
@@ -296,5 +302,110 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
   // The main act...
   return [NSMutableArray arrayWithContentsOfFile:fileAtPath];
 }
+
+// UTILS ::::::
+
+
++ (void)writeToFile:(NSMutableArray*)array withName:(NSString*) filename {
+  // Build the path, and create if needed.
+  NSString* filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+  NSString* fileName = [NSString stringWithFormat:filename, @".json"];
+  NSString* fileAtPath = [filePath stringByAppendingPathComponent:fileName];
+
+  if (![[NSFileManager defaultManager] fileExistsAtPath:fileAtPath]) {
+    [[NSFileManager defaultManager] createFileAtPath:fileAtPath contents:nil attributes:nil];
+  }
+
+  // The main act...
+  [array writeToFile:fileAtPath atomically:YES];
+}
+
++ (NSMutableArray*)readFromFile:(NSString*) filename {
+  // Build the path
+  NSString* filePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+  NSString* fileName = [NSString stringWithFormat:filename, @".json"];
+  NSString* fileAtPath = [filePath stringByAppendingPathComponent:fileName];
+
+  // The main act...
+  return [NSMutableArray arrayWithContentsOfFile:fileAtPath];
+}
+
++ (void)loadAttachmentForUrlString:(NSString *)urlString completionHandler:(void(^)(UNNotificationAttachment *))completionHandler  {
+
+  __block UNNotificationAttachment *attachment = nil;
+  NSURL *attachmentURL = [NSURL URLWithString:urlString];
+  NSString *fileExt =  @".jpg";
+
+  NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+  [[session downloadTaskWithURL:attachmentURL
+              completionHandler:^(NSURL *temporaryFileLocation, NSURLResponse *response, NSError *error) {
+    if (error != nil) {
+      NSLog(@"%@", error.localizedDescription);
+    } else {
+      NSFileManager *fileManager = [NSFileManager defaultManager];
+      NSURL *localURL = [NSURL fileURLWithPath:[temporaryFileLocation.path stringByAppendingString:fileExt]];
+      [fileManager moveItemAtURL:temporaryFileLocation toURL:localURL error:&error];
+
+      NSError *attachmentError = nil;
+      attachment = [UNNotificationAttachment attachmentWithIdentifier:@"" URL:localURL options:nil error:&attachmentError];
+      if (attachmentError) {
+        NSLog(@"%@", attachmentError.localizedDescription);
+      }
+    }
+    completionHandler(attachment);
+  }] resume];
+}
+
++ (BOOL)authorizeUserForThisModule
+{
+  if([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedAlways || [CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedWhenInUse)
+  {
+    [[GeofencingModuleDelegate sharedManager].self.locationManager requestAlwaysAuthorization];
+  } else {
+    return false;
+  }
+
+  __block bool authorizedNotifications = true;
+
+  UNAuthorizationOptions options = UNAuthorizationOptionBadge + UNAuthorizationOptionAlert + UNAuthorizationOptionSound;
+
+  [[GeofencingModuleDelegate sharedManager].self.notificationCenter getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+    if (settings.authorizationStatus != UNAuthorizationStatusAuthorized) {
+      // Notifications not allowed
+      [[GeofencingModuleDelegate sharedManager].self.notificationCenter requestAuthorizationWithOptions:options
+                            completionHandler:^(BOOL granted, NSError * _Nullable error) {
+        if (!granted) {
+          NSLog(@"Something went wrong");
+          authorizedNotifications = false;
+        }else{
+          authorizedNotifications = true;
+        }
+      }];
+    }else{
+      authorizedNotifications = true;
+    }
+  }];
+
+  return authorizedNotifications && [CLLocationManager locationServicesEnabled];
+}
+
++ (void) getDataFrom:(NSString *)url withCompletionHandler:(void(^)(NSMutableArray *result))withCompletionHandler withError:(void(^)(NSMutableArray *result))withError{
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+  [request setHTTPMethod:@"GET"];
+  [request setURL:[NSURL URLWithString:url]];
+
+  [[[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData * data, NSURLResponse * response, NSError * error) {
+
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    NSInteger statusCode = httpResponse.statusCode;
+    if (statusCode >= 200 && statusCode < 300){
+      withCompletionHandler([NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error]);
+    }else{
+      withError([NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error]);
+      NSLog(@"Error getting %@, HTTP status code %li", url, (long)[httpResponse statusCode]);
+    }
+  }] resume];
+}
+
 
 @end

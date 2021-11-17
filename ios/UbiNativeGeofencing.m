@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "UbiNativeGeofencing.h"
-#import "utils.h"
+#import "GeofencingModuleDelegate.h"
 
 #import <CoreLocation/CoreLocation.h>
 #import <UserNotifications/UserNotifications.h>
@@ -14,18 +14,8 @@ RCT_EXPORT_METHOD(startMonitoring: (NSDictionary *) channelOptions
 {
   @try
   {
-    if(![Utils sharedManager].locationManager){
-      //we now create a new locationManager service
-      [Utils sharedManager].locationManager = [CLLocationManager new];
-      [Utils sharedManager].locationManager.distanceFilter = 5;
-      [Utils sharedManager].locationManager.allowsBackgroundLocationUpdates = true;
-      [Utils sharedManager].locationManager.pausesLocationUpdatesAutomatically = true;
-      [Utils sharedManager].locationManager.activityType = CLActivityTypeFitness;
-      [Utils sharedManager].locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
-    }
-
     // You need to authorize Location Services and NotificationServices first of all
-    BOOL isUserAuthorizedForThisModule = [Utils authorizeUserForThisModule];
+    BOOL isUserAuthorizedForThisModule = [GeofencingModuleDelegate authorizeUserForThisModule];
 
     if(isUserAuthorizedForThisModule){
       NSMutableArray *entriesToSave = [NSMutableArray array];
@@ -55,9 +45,9 @@ RCT_EXPORT_METHOD(startMonitoring: (NSDictionary *) channelOptions
       }
 
       [entriesToSave addObject:map];
-      [Utils writeToFile:entriesToSave withName:@"channelOptions"];
+      [GeofencingModuleDelegate writeToFile:entriesToSave withName:@"channelOptions"];
 
-      [[Utils sharedManager].locationManager startUpdatingLocation];
+      [[GeofencingModuleDelegate sharedManager].locationManager startUpdatingLocation];
       //if watch self location start POI setup from current location
       if(map[@"watchSelfLocation"]){
         [self configPoiFromMe];
@@ -153,10 +143,10 @@ RCT_EXPORT_METHOD(removeGeofences)
 }
 
 - (void)clearPoi{
-  for(CLCircularRegion *region in [Utils sharedManager].locationManager.monitoredRegions) {
-    [[Utils sharedManager].locationManager stopMonitoringForRegion:region];
+  for(CLCircularRegion *region in [GeofencingModuleDelegate sharedManager].locationManager.monitoredRegions) {
+    [[GeofencingModuleDelegate sharedManager].locationManager stopMonitoringForRegion:region];
   }
-  [[Utils sharedManager].locationManager stopUpdatingLocation];
+  [[GeofencingModuleDelegate sharedManager].locationManager stopUpdatingLocation];
 }
 
 - (void)monitorRegionAtLocation:(CLLocationCoordinate2D *)center withId:(NSString *)identifier withRadius:(long)radius
@@ -171,7 +161,7 @@ RCT_EXPORT_METHOD(removeGeofences)
     region.notifyOnEntry = true;
 //    region.notifyOnExit = true;
 
-    [[Utils sharedManager].locationManager startMonitoringForRegion:region];
+    [[GeofencingModuleDelegate sharedManager].locationManager startMonitoringForRegion:region];
   }
 }
 
@@ -192,12 +182,12 @@ RCT_EXPORT_METHOD(removeGeofences)
     RCTLog(@"%@%@", @"Total of entries:" ,entries);
 
     //add self location as a geoFence
-    CLLocation *location = [[Utils sharedManager].locationManager location];
+    CLLocation *location = [[GeofencingModuleDelegate sharedManager].locationManager location];
     CLLocationCoordinate2D coordinate = [location coordinate];
     [self monitorRegionAtLocation:&coordinate withId:@"myCurrenLocation" withRadius:100];
     RCTLog(@"%@%@", @"Added entry:" , @"myCurrenLocation");
 
-    [Utils writeToFile:[[NSMutableArray alloc]initWithArray:entries] withName:@"geofenceEntries"];
+    [GeofencingModuleDelegate writeToFile:[[NSMutableArray alloc]initWithArray:entries] withName:@"geofenceEntries"];
 
     for (NSDictionary *entry in entries) {
       NSString *key=[entry valueForKeyPath:@"key"];
@@ -221,20 +211,14 @@ RCT_EXPORT_METHOD(removeGeofences)
 }
 
 -(void)configPoiFromMe{
-  [Utils sharedManager].locationManager = [CLLocationManager new];
-  [Utils sharedManager].locationManager.distanceFilter = 5;
-  [Utils sharedManager].locationManager.allowsBackgroundLocationUpdates = true;
-  [Utils sharedManager].locationManager.pausesLocationUpdatesAutomatically = true;
-  [Utils sharedManager].locationManager.activityType = CLActivityTypeFitness;
-  [Utils sharedManager].locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
-  [[Utils sharedManager].locationManager startUpdatingLocation];
+  [[GeofencingModuleDelegate sharedManager].locationManager startUpdatingLocation];
 
-  CLLocation *location = [[Utils sharedManager].locationManager location];
+  CLLocation *location = [[GeofencingModuleDelegate sharedManager].locationManager location];
 
   CLLocationCoordinate2D coordinate = [location coordinate];
   NSLog(@"ADDING POI LATITUDE= %f", coordinate.latitude);
 
-  NSMutableArray *collection =  [Utils readFromFile:@"channelOptions"];
+  NSMutableArray *collection =  [GeofencingModuleDelegate readFromFile:@"channelOptions"];
 
   //value key adds arrays in one array
   NSString *poiURL= [[collection valueForKeyPath:@"poiURL"] lastObject];
@@ -263,7 +247,7 @@ RCT_EXPORT_METHOD(removeGeofences)
 
   NSLog(@"ADDING POI = %@", poiURL);
 
-  [Utils getDataFrom:poiURL withCompletionHandler:^(NSMutableArray* data){
+  [GeofencingModuleDelegate getDataFrom:poiURL withCompletionHandler:^(NSMutableArray* data){
     @try {
       NSLog(@"ADDING POI = %@", @"REQUEST");
       NSLog(@"ADDING POI DATA = %@", data);
@@ -531,7 +515,7 @@ RCT_EXPORT_METHOD(removeGeofences)
   return returnValue;
 }
 
-// To export a module named GeofencingModule
-RCT_EXPORT_MODULE(Geofencing);
+// To export a module named UbiNativeGeofencing
+RCT_EXPORT_MODULE(UbiNativeGeofencing);
 
 @end
