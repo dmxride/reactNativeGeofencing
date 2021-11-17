@@ -261,69 +261,69 @@ startMonitoring(startStructure)
 
 ### **Properties :**
 
-| startStructure Props | Description | Type                                |
-| -------------------- | ----------- | ----------------------------------- |
-| channelId            | 2           | `String`                            |
-| channelName          | 2           | `String`                            |
-| channelDescription   | 2           | `String`                            |
-| startNotification    | 2           | [`Object`](#startNotificationProps) |
-| watchSelfLocation    | 2           | `Boolean`                           |
-| poiURL               | 2           | `String`                            |
-| fetchRadius          | 2           | `Number`                            |
-| dataStructure        | 2           | [`Object[]`](#dataStructureProps)   |
+| startStructure Props                         | Description | Type                                |
+| -------------------------------------------- | ----------- | ----------------------------------- |
+| channelId                                    | ""          | `String`                            |
+| channelName                                  | ""          | `String`                            |
+| channelDescription                           | ""          | `String`                            |
+| [startNotification](#startNotificationProps) | ""          | [`Object`](#startNotificationProps) |
+| watchSelfLocation                            | ""          | `Boolean`                           |
+| poiURL                                       | ""          | `String`                            |
+| fetchRadius                                  | ""          | `Number`                            |
+| (dataStructure)(#dataStructureProps)         | ""          | [`Object[]`](#dataStructureProps)   |
 
 <a name="startNotificationProps"></a>
 | startNotification Props | Description | Type |
 | ------------------- | ----------- | ---- |
-| title | 2 |`String` |
-| description | 2 | `String` |
-| deepLink | 2 | `String` |
+| title | "" |`String` |
+| description | "" | `String` |
+| deepLink | "" | `String` |
 
 <a name="dataStructureProps"></a>
 | dataStructure Props | Description | Type |
 | ------------------- | ----------- | ---- |
-| main | 2 | `String[]` |
-| poi | 2 | [`Object[]`](#poiStructureProps) |
+| main | "" | `String[]` |
+| [poi](#poiStructureProps) | "" | [`Object[]`](#poiStructureProps) |
 
 <a name="poiStructureProps"></a>
 | poi Props | Description | Type |
 | ------------ | ----------- | ---- |
-| poiId | 2 | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](<(#useNumberProps)>) \| [`usePath`](#usePathProps) |
-| latitude | 2 | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](<(#useNumberProps)>) \| [`usePath`](#usePathProps) |
-| longitude | 2 | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](<(#useNumberProps)>) \| [`usePath`](#usePathProps) |
-| radius | 2 | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](<(#useNumberProps)>) \| [`usePath`](#usePathProps) |
-| largeIcon | 2 | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](<(#useNumberProps)>) \| [`usePath`](#usePathProps) |
-| deepLink | 2 | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](<(#useNumberProps)>) \| [`usePath`](#usePathProps) |
-| enterTitle | 2 | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](<(#useNumberProps)>) \| [`usePath`](#usePathProps) |
-| enterMessage | 2 | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](<(#useNumberProps)>) \| [`usePath`](#usePathProps) |
-| exitTitle | 2 | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](<(#useNumberProps)>) \| [`usePath`](#usePathProps) |
-| exitMessage | 2 | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](<(#useNumberProps)>) \| [`usePath`](#usePathProps) |
+| poiId | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
+| latitude | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
+| longitude | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
+| radius | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
+| largeIcon | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
+| deepLink | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
+| enterTitle | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
+| enterMessage | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
+| exitTitle | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
+| exitMessage | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
 
 <a name="useStringProps"></a>
 | useString Props | Description | Type |
 | ------------------- | ----------- | ---- |
 | type | | `'string'` |
-| data | 2 | `String[]`|
-| filter | 2 | `?String[]`|
+| data | "" | `String[]`|
+| filter | "" | `?String[]`|
 
 <a name="useReplaceProps"></a>
 | useReplace Props | Description | Type |
 | ------------------- | ----------- | ---- |
 | type | | `'replace'` |
-| data | 2 | `String`|
-| fireplacelter | 2 | `{ [key: string]: String[]; }`|
+| data | "" | `String`|
+| fireplacelter | "" | `{ [key: string]: String[]; }`|
 
 <a name="useNumberProps"></a>
 | useNumber Props | Description | Type |
 | ------------------- | ----------- | ---- |
 | type | | `'number'` |
-| data | 2 | `Number`|
+| data | "" | `Number`|
 
 <a name="usePathProps"></a>
 | usePath Props | Description | Type |
 | ------------------- | ----------- | ---- |
 | type | | `'path'` |
-| data | 2 | `String[]`|
+| data | "" | `String[]`|
 
 ## `stopMonitoring`
 
