@@ -61,7 +61,7 @@ react-native link react-native-ubi-native-geofencing
 2.  Add this line to your `Podfile` just below the last pod (if you don't have one, you can create it by running `pod init`):
 
 ```sh
-pod 'UbiNativeGeofencing', :path => '../node_modules/ubiNativeGeofencing'
+pod 'react-native-ubi-native-geofencing', :path => '../node_modules/react-native-ubi-native-geofencing'
 ```
 
 3. Run
@@ -77,9 +77,9 @@ pod install
 1.  Add project to `android/settings.gradle`:
 
 ```java
-include ':ubiNativeGeofencing'
+include ':react-native-ubi-native-geofencing'
 
-project(':ubiNativeGeofencing').projectDir = new File(rootProject.projectDir, '../node_modules/ubiNativeGeofencing/android')
+project(':react-native-ubi-native-geofencing').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-ubi-native-geofencing/android')
 ```
 
 2.  In `android/app/build.gradle` add to dependencies:
@@ -94,14 +94,14 @@ dependencies {
 3.  Then, in `android/app/src/main/java/your/package/MainApplication.java`:
 
 ```java
-import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
+import com.reactnativeubinativegeofencing.UbiNativeGeofencingPackage;
 
 ...
 
 @Overrideprotected List<ReactPackage> getPackages() {
   return Arrays.<ReactPackage>asList(
     ...
-    new AsyncStoragePackage()
+    new UbiNativeGeofencingPackage()
   );
 }
 ```
