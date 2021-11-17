@@ -48,7 +48,7 @@ type unionUse = {
   replace?: any;
 };
 
-interface useString {
+/*interface useString {
   type: 'string';
   data: String[];
   filter?: String[];
@@ -71,3 +71,4 @@ interface usePath {
   type: 'path';
   data: String[];
 }
+*/
