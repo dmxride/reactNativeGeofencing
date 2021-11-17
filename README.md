@@ -31,6 +31,7 @@ If you are using **React Native 0.60+** follow this steps, for previous versions
 On iOS, use CocoaPods to add react-native-ubi-native-geofencing to your project:
 
 ```sh
+react-native link react-native-ubi-native-geofencing --platforms ios
 cd ios && npx pod-install
 ```
 
