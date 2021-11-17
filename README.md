@@ -288,16 +288,16 @@ startMonitoring(startStructure)
 <a name="poiStructureProps"></a>
 | poi Props | Description | Type |
 | ------------ | ----------- | ---- |
-| poiId | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
-| latitude | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
-| longitude | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
-| radius | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
-| largeIcon | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
-| deepLink | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
-| enterTitle | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
-| enterMessage | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
-| exitTitle | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
-| exitMessage | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`]((#useNumberProps) \| [`usePath`](#usePathProps) |
+| poiId | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](#useNumberProps) \| [`usePath`](#usePathProps) |
+| latitude | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](#useNumberProps) \| [`usePath`](#usePathProps) |
+| longitude | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](#useNumberProps) \| [`usePath`](#usePathProps) |
+| radius | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](#useNumberProps) \| [`usePath`](#usePathProps) |
+| largeIcon | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](#useNumberProps) \| [`usePath`](#usePathProps) |
+| deepLink | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](#useNumberProps) \| [`usePath`](#usePathProps) |
+| enterTitle | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](#useNumberProps) \| [`usePath`](#usePathProps) |
+| enterMessage | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](#useNumberProps) \| [`usePath`](#usePathProps) |
+| exitTitle | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](#useNumberProps) \| [`usePath`](#usePathProps) |
+| exitMessage | "" | [`useString`](#useStringProps) \| [`useReplace`](#useReplaceProps) \| [`useNumber`](#useNumberProps) \| [`usePath`](#usePathProps) |
 
 <a name="useStringProps"></a>
 | useString Props | Description | Type |
