@@ -88,11 +88,15 @@
       "commitMessage": "chore: release ${version}",
       "tagName": "v${version}"
     },
+    "gitlab": {
+      "release": true,
+      "releaseNotes": "generate-release-notes.sh ${latestVersion} ${version}"
+    },
     "npm": {
-      "publish": true
+      "publish": false
     },
     "github": {
-      "release": true
+      "release": false
     },
     "plugins": {
       "@release-it/conventional-changelog": {
