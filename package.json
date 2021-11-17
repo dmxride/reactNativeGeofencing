@@ -90,8 +90,7 @@
       "tagName": "v${version}"
     },
     "gitlab": {
-      "release": true,
-      "releaseNotes": "generate-release-notes.sh ${latestVersion} ${version}"
+      "release": true
     },
     "npm": {
       "publish": false
