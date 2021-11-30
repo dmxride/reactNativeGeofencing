@@ -269,19 +269,19 @@ const startStructure = {
         },
         enterMessage: {
           type: 'replace',
-          data: 'A entrar no monumento :title',
+          data: 'A entrar em :title',
           replace: {
             title: ['title'],
           },
         },
         exitTitle: {
           type: 'string',
-          data: 'A sair do monumento :title',
+          data: 'A sair de :title',
           filter: ['parent', 'null'],
         },
         exitMessage: {
           type: 'string',
-          data: 'A sair do monumento',
+          data: 'A sair',
           filter: ['parent', 'null'],
         },
       },
