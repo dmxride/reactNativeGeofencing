@@ -146,7 +146,7 @@ import com.reactnativecustomnativegeofencing.NativeGeofencingPackage;
 
 4. Add or update the background modes capabilities with the following settings:
 
-![BgModes1](./readme/bgModes1.png)
+![BgModes1](./readme/bgModes_1.png)
 ![BgModes2](./readme/bgModes2.png)
 
 # Usage
