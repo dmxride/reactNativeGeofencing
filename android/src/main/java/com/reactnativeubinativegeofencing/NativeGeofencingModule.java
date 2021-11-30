@@ -1,4 +1,4 @@
-package com.reactnativeubinativegeofencing;
+package com.reactnativecustomnativegeofencing;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
@@ -22,8 +22,8 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeArray;
 import com.facebook.react.bridge.WritableNativeMap;
 import com.facebook.react.module.annotations.ReactModule;
-import com.reactnativeubinativegeofencing.GeofenceBroadcastReceiver;
-import com.reactnativeubinativegeofencing.Notifications;
+import com.reactnativecustomnativegeofencing.GeofenceBroadcastReceiver;
+import com.reactnativecustomnativegeofencing.Notifications;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
@@ -59,16 +59,16 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-@ReactModule(name = UbiNativeGeofencingModule.NAME)
-public class UbiNativeGeofencingModule extends ReactContextBaseJavaModule {
-  public static final String NAME = "UbiNativeGeofencing";
+@ReactModule(name = NativeGeofencingModule.NAME)
+public class NativeGeofencingModule extends ReactContextBaseJavaModule {
+  public static final String NAME = "NativeGeofencing";
   private static ReactApplicationContext reactContext;
   private static GeofencingClient geofencingClient;
   private static GeofencingRequest.Builder geoBuilder;
   private static PendingIntent geofencePendingIntent;
   public static String GeofencingPrefs = "geofencing_preferences";
 
-  public UbiNativeGeofencingModule(ReactApplicationContext context) {
+  public NativeGeofencingModule(ReactApplicationContext context) {
     super(context);
     reactContext = context;
   }

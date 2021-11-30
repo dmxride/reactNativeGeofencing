@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.example.reactnativeubinativegeofencing">
+  package="com.example.reactnativecustomnativegeofencing">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,7 +11,7 @@
       android:allowBackup="false"
       android:theme="@style/AppTheme">
 
-      <receiver android:name="com.reactnativeubinativegeofencing.GeofenceBroadcastReceiver" />
+      <receiver android:name="com.reactnativecustomnativegeofencing.GeofenceBroadcastReceiver" />
 
       <activity
         android:name=".MainActivity"

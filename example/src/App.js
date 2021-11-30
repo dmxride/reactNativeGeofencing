@@ -4,7 +4,7 @@ import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import {
   startMonitoring,
   stopMonitoring,
-} from 'react-native-ubi-native-geofencing';
+} from 'react-native-custom-native-geofencing';
 
 import { monitoringMockStructure } from './mock';
 

@@ -1,4 +1,4 @@
-package com.reactnativeubinativegeofencing;
+package com.reactnativecustomnativegeofencing;
 
 import android.app.ActivityManager;
 import android.app.NotificationManager;

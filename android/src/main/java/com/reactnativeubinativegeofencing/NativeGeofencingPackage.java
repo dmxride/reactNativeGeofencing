@@ -1,4 +1,4 @@
-package com.reactnativeubinativegeofencing;
+package com.reactnativecustomnativegeofencing;
 
 import androidx.annotation.NonNull;
 
@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class UbiNativeGeofencingPackage implements ReactPackage {
+public class NativeGeofencingPackage implements ReactPackage {
     @NonNull
     @Override
     public List<NativeModule> createNativeModules(@NonNull ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
-        modules.add(new UbiNativeGeofencingModule(reactContext));
+        modules.add(new NativeGeofencingModule(reactContext));
         return modules;
     }
 

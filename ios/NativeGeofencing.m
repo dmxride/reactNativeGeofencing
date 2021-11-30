@@ -1,12 +1,12 @@
 #import <Foundation/Foundation.h>
-#import "UbiNativeGeofencing.h"
+#import "NativeGeofencing.h"
 #import "GeofencingModuleDelegate.h"
 
 #import <CoreLocation/CoreLocation.h>
 #import <UserNotifications/UserNotifications.h>
 #import <React/RCTLog.h>
 
-@implementation UbiNativeGeofencing
+@implementation NativeGeofencing
 
 RCT_EXPORT_METHOD(startMonitoring: (NSDictionary *) channelOptions
                   resolver:(RCTPromiseResolveBlock)resolve
@@ -515,7 +515,7 @@ RCT_EXPORT_METHOD(removeGeofences)
   return returnValue;
 }
 
-// To export a module named UbiNativeGeofencing
-RCT_EXPORT_MODULE(UbiNativeGeofencing);
+// To export a module named NativeGeofencing
+RCT_EXPORT_MODULE(NativeGeofencing);
 
 @end

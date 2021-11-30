@@ -19,7 +19,7 @@
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
 
-#import <react-native-ubi-native-geofencing/GeofencingModuleDelegate.h>
+#import <react-native-custom-native-geofencing/GeofencingModuleDelegate.h>
 
 #import <CoreLocation/CoreLocation.h>
 #import <UserNotifications/UserNotifications.h>
@@ -45,7 +45,7 @@ static void InitializeFlipper(UIApplication *application) {
   #endif
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-                                                   moduleName:@"UbiNativeGeofencingExample"
+                                                   moduleName:@"NativeGeofencingExample"
                                             initialProperties:nil];
 
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];

@@ -19,13 +19,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		134814201AA4EA6300B7C361 /* libUbiNativeGeofencing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUbiNativeGeofencing.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		134814201AA4EA6300B7C361 /* libNativeGeofencing.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNativeGeofencing.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A79AC642743BD7B00D01787 /* GeofencingModuleDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeofencingModuleDelegate.m; sourceTree = "<group>"; };
 		6A79AC652743BD7B00D01787 /* GeofencingModuleDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeofencingModuleDelegate.h; sourceTree = "<group>"; };
 		6A79AC662743BD7B00D01787 /* utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = utils.h; sourceTree = "<group>"; };
 		6A79AC672743BD7B00D01787 /* utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = utils.m; sourceTree = "<group>"; };
-		B3E7B5881CC2AC0600A0062D /* UbiNativeGeofencing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UbiNativeGeofencing.h; sourceTree = "<group>"; };
-		B3E7B5891CC2AC0600A0062D /* UbiNativeGeofencing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UbiNativeGeofencing.m; sourceTree = "<group>"; };
+		B3E7B5881CC2AC0600A0062D /* NativeGeofencing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeGeofencing.h; sourceTree = "<group>"; };
+		B3E7B5891CC2AC0600A0062D /* NativeGeofencing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NativeGeofencing.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +42,7 @@
 		134814211AA4EA7D00B7C361 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				134814201AA4EA6300B7C361 /* libUbiNativeGeofencing.a */,
+				134814201AA4EA6300B7C361 /* libNativeGeofencing.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -54,8 +54,8 @@
 				6A79AC642743BD7B00D01787 /* GeofencingModuleDelegate.m */,
 				6A79AC662743BD7B00D01787 /* utils.h */,
 				6A79AC672743BD7B00D01787 /* utils.m */,
-				B3E7B5881CC2AC0600A0062D /* UbiNativeGeofencing.h */,
-				B3E7B5891CC2AC0600A0062D /* UbiNativeGeofencing.m */,
+				B3E7B5881CC2AC0600A0062D /* NativeGeofencing.h */,
+				B3E7B5891CC2AC0600A0062D /* NativeGeofencing.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -63,9 +63,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		58B511DA1A9E6C8500147676 /* UbiNativeGeofencing */ = {
+		58B511DA1A9E6C8500147676 /* NativeGeofencing */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "UbiNativeGeofencing" */;
+			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "NativeGeofencing" */;
 			buildPhases = (
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
@@ -75,9 +75,9 @@
 			);
 			dependencies = (
 			);
-			name = UbiNativeGeofencing;
+			name = NativeGeofencing;
 			productName = RCTDataManager;
-			productReference = 134814201AA4EA6300B7C361 /* libUbiNativeGeofencing.a */;
+			productReference = 134814201AA4EA6300B7C361 /* libNativeGeofencing.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -94,7 +94,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "UbiNativeGeofencing" */;
+			buildConfigurationList = 58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "NativeGeofencing" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -107,7 +107,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				58B511DA1A9E6C8500147676 /* UbiNativeGeofencing */,
+				58B511DA1A9E6C8500147676 /* NativeGeofencing */,
 			);
 		};
 /* End PBXProject section */
@@ -227,7 +227,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = UbiNativeGeofencing;
+				PRODUCT_NAME = NativeGeofencing;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
@@ -243,7 +243,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = UbiNativeGeofencing;
+				PRODUCT_NAME = NativeGeofencing;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -251,7 +251,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "UbiNativeGeofencing" */ = {
+		58B511D61A9E6C8500147676 /* Build configuration list for PBXProject "NativeGeofencing" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511ED1A9E6C8500147676 /* Debug */,
@@ -260,7 +260,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "UbiNativeGeofencing" */ = {
+		58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "NativeGeofencing" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				58B511F01A9E6C8500147676 /* Debug */,

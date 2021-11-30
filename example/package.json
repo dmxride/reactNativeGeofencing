@@ -1,6 +1,6 @@
 {
-  "name": "react-native-ubi-native-geofencing-example",
-  "description": "Example app for react-native-ubi-native-geofencing",
+  "name": "react-native-custom-native-geofencing-example",
+  "description": "Example app for react-native-custom-native-geofencing",
   "version": "0.0.1",
   "private": true,
   "scripts": {

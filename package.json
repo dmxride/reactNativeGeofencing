@@ -1,5 +1,5 @@
 {
-  "name": "react-native-ubi-native-geofencing",
+  "name": "react-native-custom-geofencing",
   "version": "0.1.1",
   "description": "Geofencing native integration with react-native",
   "main": "lib/commonjs/index",
@@ -13,7 +13,7 @@
     "android",
     "ios",
     "cpp",
-    "react-native-ubi-native-geofencing.podspec",
+    "react-native-custom-geofencing.podspec",
     "!lib/typescript/example",
     "!android/build",
     "!ios/build",
@@ -37,7 +37,7 @@
     "android"
   ],
   "repository": "https://www.google.com",
-  "author": "Carlos Silva <csilva@ubiwhere.pt> (https://www.google.com)",
+  "author": "Carlos Silva <cjhs1994@gmail.com> (https://www.google.com)",
   "license": "MIT",
   "bugs": {
     "url": "https://www.google.com/issues"

@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  UbiNativeGeofencingExample
+//  NativeGeofencingExample
 //
 
 import Foundation

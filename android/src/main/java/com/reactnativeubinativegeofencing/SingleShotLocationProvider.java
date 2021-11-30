@@ -1,4 +1,4 @@
-package com.reactnativeubinativegeofencing;
+package com.reactnativecustomnativegeofencing;
 
 import android.Manifest;
 import android.app.Activity;

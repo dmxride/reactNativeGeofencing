@@ -1,6 +1,5 @@
 //
 //  GeofencingModuleDelegate.m
-//  app_geoparque_vc
 //
 //  Created by Carlos Silva on 16/03/2021.
 //  Copyright © 2021 Facebook. All rights reserved.
@@ -8,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "GeofencingModuleDelegate.h"
-#import "UbiNativeGeofencing.h"
+#import "NativeGeofencing.h"
 
 #import <CoreLocation/CoreLocation.h>
 #import <UserNotifications/UserNotifications.h>
@@ -198,7 +197,7 @@ completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAu
 
   if([[region valueForKeyPath:@"identifier"] isEqualToString:@"myCurrenLocation"]){
     NSLog(@"Region = %@", @"Did exit myCurrenLocation");
-      UbiNativeGeofencing *theObject=[[UbiNativeGeofencing alloc]init];
+      NativeGeofencing *theObject=[[NativeGeofencing alloc]init];
     [theObject configPoiFromMe];
   }
 }

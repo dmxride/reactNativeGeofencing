@@ -1,4 +1,4 @@
-# react-native-ubi-native-geofencing
+# react-native-custom-native-geofencing
 
 Native geofencing integration with react-native, works while in background for both Android and iOS devices.
 
@@ -11,13 +11,13 @@ Native geofencing integration with react-native, works while in background for b
 With npm:
 
 ```sh
-npm install --save react-native-ubi-native-geofencing
+npm install --save react-native-custom-native-geofencing
 ```
 
 With yarn:
 
 ```sh
-yarn add react-native-ubi-native-geofencing
+yarn add react-native-custom-native-geofencing
 ```
 
 ## Linking
@@ -28,17 +28,17 @@ If you are using **React Native 0.60+** follow this steps, for previous versions
 
 [CLI autolink feature](https://github.com/react-native-community/cli/blob/master/docs/autolinking.md) links the module while building the app.
 
-On iOS, use CocoaPods to add react-native-ubi-native-geofencing to your project:
+On iOS, use CocoaPods to add react-native-custom-native-geofencing to your project:
 
 ```sh
-react-native link react-native-ubi-native-geofencing --platforms ios
+react-native link react-native-custom-native-geofencing --platforms ios
 cd ios && npx pod-install
 ```
 
 ### **React Native <= 0.59**
 
 ```sh
-react-native link react-native-ubi-native-geofencing
+react-native link react-native-custom-native-geofencing
 ```
 
 ## <a name="manualLinkingStep"></a>Manual Linking
@@ -51,8 +51,8 @@ react-native link react-native-ubi-native-geofencing
 
 1.  Open your project `.xcodeproj` on xcode.
 2.  Right click on the Libraries folder and select `Add files to "yourProjectName"`.
-3.  Add `UbiNativeGeofencing.xcodeproj` (located at `node_modules/ubiNativeGeofencing/ios`) to your project Libraries.
-4.  Go to `Build Phases -> Link Binary with Libraries` and add: `libUbiNativeGeofencing.a`.
+3.  Add `NativeGeofencing.xcodeproj` (located at `node_modules/nativeGeofencing/ios`) to your project Libraries.
+4.  Go to `Build Phases -> Link Binary with Libraries` and add: `libNativeGeofencing.a`.
 
 ---
 
@@ -62,7 +62,7 @@ react-native link react-native-ubi-native-geofencing
 2.  Add this line to your `Podfile` just below the last pod (if you don't have one, you can create it by running `pod init`):
 
 ```sh
-pod 'react-native-ubi-native-geofencing', :path => '../node_modules/react-native-ubi-native-geofencing'
+pod 'react-native-custom-native-geofencing', :path => '../node_modules/react-native-custom-native-geofencing'
 ```
 
 3. Run
@@ -78,9 +78,9 @@ pod install
 1.  Add project to `android/settings.gradle`:
 
 ```java
-include ':react-native-ubi-native-geofencing'
+include ':react-native-custom-native-geofencing'
 
-project(':react-native-ubi-native-geofencing').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-ubi-native-geofencing/android')
+project(':react-native-custom-native-geofencing').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-custom-native-geofencing/android')
 ```
 
 2.  In `android/app/build.gradle` add to dependencies:
@@ -95,14 +95,14 @@ dependencies {
 3.  Then, in `android/app/src/main/java/your/package/MainApplication.java`:
 
 ```java
-import com.reactnativeubinativegeofencing.UbiNativeGeofencingPackage;
+import com.reactnativecustomnativegeofencing.NativeGeofencingPackage;
 
 ...
 
 @Overrideprotected List<ReactPackage> getPackages() {
   return Arrays.<ReactPackage>asList(
     ...
-    new UbiNativeGeofencingPackage()
+    new NativeGeofencingPackage()
   );
 }
 ```
@@ -116,7 +116,7 @@ import com.reactnativeubinativegeofencing.UbiNativeGeofencingPackage;
 1. Simply add this to your `AndroidManifest.xml` inside the `<application>` tag:
 
 ```java
-<receiver android:name="com.reactnativeubinativegeofencing.GeofenceBroadcastReceiver" />
+<receiver android:name="com.reactnativecustomnativegeofencing.GeofenceBroadcastReceiver" />
 ```
 
 ### iOS
@@ -126,7 +126,7 @@ import com.reactnativeubinativegeofencing.UbiNativeGeofencingPackage;
 1. Inside your `AppDelegate.m` import the header file
 
 ```objective-c
- #import <react-native-ubi-native-geofencing/GeofencingModuleDelegate.h>
+ #import <react-native-custom-native-geofencing/GeofencingModuleDelegate.h>
 ```
 
 2. Inside your delegate `- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions` insert this before the `return` statement:
@@ -156,7 +156,7 @@ import {
   startMonitoring,
   addPois,
   stopMonitoring,
-} from 'react-native-ubi-native-geofencing';
+} from 'react-native-custom-native-geofencing';
 
 startMonitoring(monitoringDataStructure)
       .then(() => {
@@ -214,23 +214,23 @@ Promise can also be rejected in case of an error.
 
 import {
   startMonitoring
-} from 'react-native-ubi-native-geofencing';
+} from 'react-native-custom-native-geofencing';
 
 
 const startStructure = {
-  channelId: 'geoparque_geofence_channel',
-  channelName: 'Geoparque Geofence Channel',
-  channelDescription: 'Channel for geoparque geofences',
+  channelId: 'geofence_channel',
+  channelName: 'Geofence Channel',
+  channelDescription: 'Channel for geofences',
   startNotification: {
     title: 'Started Title',
     description: 'Started Description',
     //adds a deeplink to your notification on click
-    deepLink: 'geoparque://app/geofence',
+    deepLink: 'deeplink://app/link',
   },
   //....auto location BGsearch integration......
   watchSelfLocation: true,
   poiURL:
-    'https://geoparquelitoralviana.pt/api/v2/pois/?title_search=&only_points=true&categories=8,4,6,7&radius=:radius&lat=:latitude&long=:longitude',
+    'https://api_url/api/v2/pois/?title_search=&only_points=true&categories=8,4,6,7&radius=:radius&lat=:latitude&long=:longitude',
   fetchRadius: 0.4,
   dataStructure: [
     {
@@ -254,7 +254,7 @@ const startStructure = {
         },
         largeIcon: {
           type: 'replace',
-          data: 'https://geoparquelitoralviana.pt/:url',
+          data: 'https://media_url/:url',
           replace: {
             url: ['feature_image', 'medium_size', 'url'],
           },
@@ -391,7 +391,7 @@ Promise can also be rejected in case of an error.
 
 import {
   stopMonitoring
-} from 'react-native-ubi-native-geofencing';
+} from 'react-native-custom-native-geofencing';
 
 stopMonitoring()
       .then(() => {
@@ -429,7 +429,7 @@ Promise can also be rejected in case of an error.
 
 import {
   addPois
-} from 'react-native-ubi-native-geofencing';
+} from 'react-native-custom-native-geofencing';
 
 const poisStructure = [
  {

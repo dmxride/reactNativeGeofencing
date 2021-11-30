@@ -1,16 +1,16 @@
 export const monitoringMockStructure = {
-  channelId: 'geoparque_geofence_channel',
-  channelName: 'Geoparque Geofence Channel',
-  channelDescription: 'Channel for geoparque geofences',
+  channelId: 'geofence_channel',
+  channelName: 'Channel',
+  channelDescription: 'Channel for geofences',
   startNotification: {
     title: 'Started Title',
     description: 'Started Description',
-    deepLink: 'geoparque://app/geofence',
+    deepLink: 'link://app/deeplink',
   },
   //....auto location BGsearch integration......
   watchSelfLocation: true,
   poiURL:
-    'https://geoparquelitoralviana.pt/api/v2/pois/?title_search=&only_points=true&categories=8,4,6,7&radius=:radius&lat=:latitude&long=:longitude',
+    'https://api_url/api/v2/pois/?title_search=&only_points=true&categories=8,4,6,7&radius=:radius&lat=:latitude&long=:longitude',
   fetchRadius: 0.4,
   filter: [['poi', 'poiId', '=']],
   dataStructure: [
@@ -35,7 +35,7 @@ export const monitoringMockStructure = {
         },
         largeIcon: {
           type: 'replace',
-          data: 'https://geoparquelitoralviana.pt/:url',
+          data: 'https://media_url/:url',
           replace: {
             url: ['feature_image', 'medium_size', 'url'],
           },
@@ -50,19 +50,19 @@ export const monitoringMockStructure = {
         },
         enterMessage: {
           type: 'replace',
-          data: 'A entrar no monumento :title',
+          data: 'A entrar em :title',
           replace: {
             title: ['title'],
           },
         },
         exitTitle: {
           type: 'string',
-          data: 'A sair do monumento :title',
+          data: 'A sair de :title',
           filter: ['parent', 'null'],
         },
         exitMessage: {
           type: 'string',
-          data: 'A sair do monumento',
+          data: 'A sair de',
           filter: ['parent', 'null'],
         },
       },

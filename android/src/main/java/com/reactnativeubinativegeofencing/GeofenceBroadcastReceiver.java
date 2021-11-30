@@ -1,7 +1,7 @@
-package com.reactnativeubinativegeofencing;
+package com.reactnativecustomnativegeofencing;
 
-import static com.reactnativeubinativegeofencing.UbiNativeGeofencingModule.readEntries;
-import static com.reactnativeubinativegeofencing.UbiNativeGeofencingModule.readEntriesArray;
+import static com.reactnativecustomnativegeofencing.NativeGeofencingModule.readEntries;
+import static com.reactnativecustomnativegeofencing.NativeGeofencingModule.readEntriesArray;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -12,11 +12,11 @@ import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
-import com.reactnativeubinativegeofencing.UbiNativeGeofencingModule;
-import com.reactnativeubinativegeofencing.ReactNativeJson;
-import com.reactnativeubinativegeofencing.Notifications;
+import com.reactnativecustomnativegeofencing.NativeGeofencingModule;
+import com.reactnativecustomnativegeofencing.ReactNativeJson;
+import com.reactnativecustomnativegeofencing.Notifications;
 
-import com.reactnativeubinativegeofencing.SingleShotLocationProvider;
+import com.reactnativecustomnativegeofencing.SingleShotLocationProvider;
 import com.google.android.gms.location.Geofence;
 import com.google.android.gms.location.GeofenceStatusCodes;
 import com.google.android.gms.location.GeofencingEvent;
@@ -151,7 +151,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                 new SingleShotLocationProvider.LocationCallback() {
                   @Override
                   public void onNewLocationAvailable(Location location) throws JSONException {
-                    UbiNativeGeofencingModule.configPoiFromMe(promise, context, location);
+                    NativeGeofencingModule.configPoiFromMe(promise, context, location);
                   }
                 });
 

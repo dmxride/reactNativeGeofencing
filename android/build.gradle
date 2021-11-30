@@ -20,10 +20,10 @@ def safeExtGet(prop, fallback) {
 }
 
 android {
-    compileSdkVersion safeExtGet('UbiNativeGeofencing_compileSdkVersion', 29)
+    compileSdkVersion safeExtGet('NativeGeofencing_compileSdkVersion', 29)
     defaultConfig {
-        minSdkVersion safeExtGet('UbiNativeGeofencing_minSdkVersion', 16)
-        targetSdkVersion safeExtGet('UbiNativeGeofencing_targetSdkVersion', 29)
+        minSdkVersion safeExtGet('NativeGeofencing_minSdkVersion', 16)
+        targetSdkVersion safeExtGet('NativeGeofencing_targetSdkVersion', 29)
         versionCode 1
         versionName "1.0"
 

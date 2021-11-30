@@ -1,6 +1,5 @@
 //
 //  GeofencingModuleDelegate.h
-//  app_geoparque_vc
 //
 //  Created by Carlos Silva on 16/03/2021.
 //  Copyright © 2021 Facebook. All rights reserved.
